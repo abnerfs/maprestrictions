@@ -1,0 +1,2 @@
+# maprestrictions
+TecnoHard Map Restrictions
