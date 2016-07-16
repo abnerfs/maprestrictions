@@ -1,4 +1,4 @@
-# TecnoHard Dust2
+# [CS:GO] TecnoHard Dust2
   Plugin que restringe as áreas da dust2 de acordo com o número de jogadores.
  
  - Menos que 6 jogadores só fundo.
