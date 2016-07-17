@@ -1,0 +1,13 @@
+"Phrases"
+{
+	"fundo"
+	{
+		"pt" 	"{green}Só fundo."
+		"en"	"{green}Long Only."
+	}
+	"varanda"
+	{
+		"pt" 	"{green}Fundo e Varanda."
+		"en"	"{green}Cat and Long Only"
+	}
+}
