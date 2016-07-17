@@ -1,6 +1,7 @@
-# [CS:GO] TecnoHard Dust2
-  Plugin que restringe as áreas da dust2 de acordo com o número de jogadores.
+# [CS:GO] AbNeR Dust2
+  Restrict areas in Dust2 depending on the number of players.
  
- - Menos que 6 jogadores só fundo.
- - Mais que 5 jogadores e menos que 10 fundo e varanda.
- - Mais que 9 jogadores mapa todo liberado.
+ - Less than 6 players allows Long only.
+ - More than 5 players and less than 10 allows Cat and Long.
+ - More than 9 players allows entire map.
+ -
