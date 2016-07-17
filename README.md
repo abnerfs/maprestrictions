@@ -7,3 +7,7 @@
  - More than 5 players and less than 10 allows Cat and Long.
  - More than 9 players allows entire map
  
+# Support
+- AlliedModders: https://forums.alliedmods.net/showthread.php?p=2437271#post2437271
+- TecnoHard Clan: http://www.tecnohardclan.com/forum/index.php/topic/5695-csgo-tecnohard-dust2/
+ 
