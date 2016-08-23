@@ -2,7 +2,7 @@
 #include <colors>
 #include <sdktools>
 
-#define PLUGIN_VERSION "1.1"
+#define PLUGIN_VERSION "1.1fix"
 #pragma newdecls required
 
 ArrayList props;
@@ -21,7 +21,6 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	LoadTranslations("abner_maprestrictions.phrases");
 	AutoExecConfig(true, "abner_maprestrictions");
 	
 	g_AutoReload  	 = CreateConVar("abner_maprestrictions_autorefresh", "1", "Refresh props when player joins a team our disconnect.");
