@@ -2,7 +2,7 @@
 #include <colors>
 #include <sdktools>
 
-#define PLUGIN_VERSION "1.1fix"
+#define PLUGIN_VERSION "1.2"
 #pragma newdecls required
 
 ArrayList props;
@@ -13,10 +13,10 @@ Handle g_Message;
 public Plugin myinfo =
 {
 	name 			= "AbNeR Map Restrictions",
-	author		    = "AbNeR_CSS",
+	author		    = "abnerfs",
 	description 	= "Area restrictions in maps.",
 	version 		= PLUGIN_VERSION,
-	url 			= "http://www.tecnohardclan.com/forum/"
+	url 			= "https://github.com/abnerfs/maprestrictions"
 }
 
 public void OnPluginStart()

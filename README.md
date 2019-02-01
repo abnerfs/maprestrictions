@@ -40,7 +40,7 @@ File **abner_maprestrictions.cfg** will be autocreated in **sourcemod/cfg** firs
  ``` 
  
  > For a while only **de_dust2** is configured in this plugin, you can try change positions in **sourcemod/data/de_dust2.ini** or even create new files for other maps like **de_inferno.ini** and configure the positions following the example of de_dust2.ini. (This will take some work)
- > In future i will make some menu to save custom positions of maps in game (I would accept help to do it :D)
+ > In future i will make some menu to save custom positions of maps in game (I would accept help to do that :D)
  
 # Support
 - AlliedModders: https://forums.alliedmods.net/showthread.php?p=2437271#post2437271
