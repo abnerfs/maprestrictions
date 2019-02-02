@@ -2,7 +2,7 @@
 #include <colors>
 #include <sdktools>
 
-#define PLUGIN_VERSION "1.2"
+#define PLUGIN_VERSION "1.2.1"
 #pragma newdecls required
 
 ArrayList props;
