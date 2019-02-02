@@ -1,5 +1,6 @@
 # [CS:GO] AbNeR MapRestrictions
-  ![csgo_2019-02-01_07-33-41](https://user-images.githubusercontent.com/14078661/52115131-0275ca80-25f5-11e9-903e-e3cb94bb8850.jpg)
+![csgo_2019-02-02_09-25-00](https://user-images.githubusercontent.com/14078661/52163704-17be2800-26cd-11e9-8d09-2c859b513043.jpg)
+
 
 
   > Plugin to restrict areas in maps depending on the number of players.
