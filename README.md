@@ -1,4 +1,7 @@
 # [CS:GO] AbNeR MapRestrictions
+
+![Downloads](https://img.shields.io/github/downloads/abnerfs/maprestrictions/total) ![Last commit](https://img.shields.io/github/last-commit/abnerfs/maprestrictions "Last commit") ![Open issues](https://img.shields.io/github/issues/abnerfs/maprestrictions "Open Issues") ![Closed issues](https://img.shields.io/github/issues-closed/abnerfs/maprestrictions "Closed Issues") ![Size](https://img.shields.io/github/repo-size/abnerfs/dontpad-api "Size")
+
 ![csgo_2019-02-02_09-25-00](https://user-images.githubusercontent.com/14078661/52163704-17be2800-26cd-11e9-8d09-2c859b513043.jpg)
 
 
