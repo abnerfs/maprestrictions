@@ -2,7 +2,7 @@
 #include <colors>
 #include <sdktools>
 
-#define PLUGIN_VERSION "1.2.1"
+#define PLUGIN_VERSION "1.2.2"
 #pragma newdecls required
 
 ArrayList props;
@@ -74,14 +74,32 @@ void DeleteAllProps(){
 	props.Clear();
 }
 
+stock void BuildDataPath(char[] path, char[] mapname) {
+	char enginePath[100];
+	EngineVersion engine = GetEngineVersion();
+	switch(engine) {
+		case Engine_CSGO: {
+			Format(enginePath, sizeof(enginePath), "csgo");
+		}
+		case Engine_CSS: {
+			Format(enginePath, sizeof(enginePath), "css");
+		}
+		default: {
+			Format(enginePath, sizeof(enginePath), "other");
+		}
+	}
+	BuildPath(Path_SM, path, PLATFORM_MAX_PATH, "data/abner_maprestrictions/%s/%s.ini", enginePath, mapname);
+}
 
 void PrintMessage(){
 	char mapname[100];
 	GetCurrentMap(mapname, sizeof(mapname))
 	int PlayerCount = GetTeamClientCount(3) + GetTeamClientCount(2);
 	KeyValues kv = new KeyValues("Messages");
+
 	char path[PLATFORM_MAX_PATH];
-	BuildPath(Path_SM, path, sizeof(path), "data/abner_maprestrictions/%s.ini", mapname);
+	BuildDataPath(path, mapname);
+
 	if(!FileToKeyValues(kv, path)) return;
 	if(kv.JumpToKey("Messages") && kv.GotoFirstSubKey()){
 		do
@@ -109,8 +127,10 @@ void CreateProps(){
 	props.Clear();
 	int PlayerCount = GetTeamClientCount(3) + GetTeamClientCount(2);
 	KeyValues kv = new KeyValues("Positions");
+
 	char path[PLATFORM_MAX_PATH];
-	BuildPath(Path_SM, path, sizeof(path), "data/abner_maprestrictions/%s.ini", mapname);
+	BuildDataPath(path, mapname);
+	
 	if(!FileToKeyValues(kv, path)) return;
 		
 	if(kv.JumpToKey("Positions") && kv.GotoFirstSubKey())
