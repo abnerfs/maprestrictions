@@ -2,13 +2,14 @@
 #include <colors>
 #include <sdktools>
 
-#define PLUGIN_VERSION "1.2.2"
+#define PLUGIN_VERSION "1.2.3"
 #pragma newdecls required
 
 ArrayList props;
 
 Handle g_AutoReload;
 Handle g_Message;
+Handle g_Enabled;
 
 public Plugin myinfo =
 {
@@ -25,7 +26,10 @@ public void OnPluginStart()
 	
 	g_AutoReload  	 = CreateConVar("abner_maprestrictions_autorefresh", "1", "Refresh props when player joins a team our disconnect.");
 	g_Message		 = CreateConVar("abner_maprestrictions_msgs", "1", "Show message when round starts");
-		
+	g_Enabled		 = CreateConVar("abner_maprestrictions_enabled", "1", "Enabled/Disable plugin", FCVAR_NONE, true, 0.0, true, 1.0);
+	
+	HookConVarChange(g_Enabled, EnabledRestrictions);
+	
 	props = new ArrayList();
 	HookEvent("round_start", EventRoundStart);
 	HookEvent("player_team", PlayerJoinTeam);
@@ -37,17 +41,22 @@ public void OnPluginStart()
 public Action PlayerJoinTeam(Handle ev, char[] name, bool dbroad){
 	if(GetConVarInt(g_AutoReload) == 1)
 		CreateTimer(0.1, ReloadPropsTime);
+	return Plugin_Continue;
 }
 
 public Action CmdReloadProps(int client, int args){
 	ReloadProps();
+	return Plugin_Continue;
 }
 
 public Action ReloadPropsTime(Handle time){
 	ReloadProps();
+	return Plugin_Continue;
 }
 
-
+public void EnabledRestrictions(ConVar convar, char[] oldValue, char[] newValue) {
+    ReloadProps();
+}
 
 public Action EventRoundStart(Handle ev, char[] name, bool db){
 	ReloadProps();
@@ -60,9 +69,10 @@ public Action EventRoundStart(Handle ev, char[] name, bool db){
 
 void ReloadProps(){
 	DeleteAllProps();
-	CreateProps();
+	if (GetConVarInt(g_Enabled) == 1) {
+		CreateProps();
+	}
 }
-
 
 void DeleteAllProps(){
 
