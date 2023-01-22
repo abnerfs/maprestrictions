@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <colors>
 #include <sdktools>
+#include <cstrike>
 
 #define PLUGIN_VERSION "1.2.2"
 #pragma newdecls required
@@ -317,7 +318,6 @@ void PrintMessage()
 	{
 		SetFailState("[AbNeR MapRestrictions] - Corrupted %s.ini file", mapname);
 	}
-	delete kv;
 }
 
 int SpawnRestriction(float position[3], float angles[3])
@@ -334,6 +334,11 @@ int SpawnRestriction(float position[3], float angles[3])
 	return entity;
 }
 
+void GetPositionName(int client, char[] buffer, int size)
+{
+	GetEntPropString(client, Prop_Send, "m_szLastPlaceName", buffer, size);
+}
+
 void CreateProps()
 {
 	char mapname[100];
@@ -346,7 +351,10 @@ void CreateProps()
 	char	  path[PLATFORM_MAX_PATH];
 	BuildDataPath(path, mapname);
 
-	if (!FileToKeyValues(kv, path)) return;
+	if (!FileToKeyValues(kv, path))
+	{
+		return;
+	}
 
 	if (kv.JumpToKey("Positions") && kv.GotoFirstSubKey())
 	{
@@ -384,5 +392,47 @@ void CreateProps()
 	{
 		SetFailState("[AbNeR MapRestrictions] - Corrupted %s.ini file", mapname);
 	}
+
+	kv.Rewind();
+
+	if (kv.JumpToKey("MapPositions") && kv.GotoFirstSubKey())
+	{
+		do
+		{
+			char sectionName[1024];
+			kv.GetSectionName(sectionName, sizeof(sectionName));
+
+			int	 from = kv.GetNum("from", 0);
+
+			char positions[20][255];
+			ExplodeString(sectionName, ";", positions, sizeof(positions), sizeof(positions[]));
+
+			for (int i = 0; i < sizeof(positions); i++)
+			{
+				if (StrEqual(positions[i], ""))
+					continue;
+
+				TrimString(positions[i]);
+
+				if (PlayerCount < from)
+					for (int j = 1; j <= MaxClients; j++)
+					{
+						if (IsClientInGame(j) && IsClientConnected(j) && IsPlayerAlive(j))
+						{
+							char sLocation[255];
+							GetPositionName(j, sLocation, sizeof(sLocation));
+
+							if (StrEqual(sLocation, positions[i], false))
+							{
+								LogMessage("TP min player %N", j);
+								CS_RespawnPlayer(j);
+							}
+						}
+					}
+			}
+		}
+		while (kv.GotoNextKey());
+	}
+
 	delete kv;
 }
