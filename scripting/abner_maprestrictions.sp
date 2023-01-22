@@ -166,13 +166,24 @@ void MoveRestriction(int entity, float position[3], float angles[3])
 	TeleportEntity(entity, position, angles, NULL_VECTOR);
 }
 
-void GetPropPositionByClient(int client, float viewpos[3], float propang[3], int propEntity)
+void GetPropPositionByClient(int client, float proppos[3], float propang[3], int propEntity)
 {
-	viewpos = GetViewPoint(client, propEntity);
-
 	float clientang[3];
 	GetClientEyeAngles(client, clientang);
+
+	propang = clientang;
+	propang[0] = 0.0;
 	propang[1] += 180.0;
+
+	float direction[3];
+	GetAngleVectors(clientang, direction, NULL_VECTOR, NULL_VECTOR);
+
+	float startpos[3];
+	GetClientEyePosition(client, startpos);
+
+	ScaleVector(direction, 150.0);
+	AddVectors(startpos, direction, proppos);
+	proppos[2] += 50.0;
 }
 
 void ShowSpawnMenu(int client)
