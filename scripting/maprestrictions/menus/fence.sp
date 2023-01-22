@@ -27,7 +27,7 @@ public int FencesHandler(Menu menu, MenuAction action, int param1, int param2)
 	if (param2 == MenuCancel_ExitBack)
 	{
 		char sInfo[10];
-		menu.GetItem(1, sInfo, sizeof(sInfo));
+		menu.GetItem(0, sInfo, sizeof(sInfo));
 
 		char buffers[2][10];
 		ExplodeString(sInfo, ";", buffers, sizeof(buffers), sizeof(buffers[]));
@@ -48,14 +48,7 @@ public int FencesHandler(Menu menu, MenuAction action, int param1, int param2)
 			char buffers[2][10];
 			ExplodeString(sInfo, ";", buffers, sizeof(buffers), sizeof(buffers[]));
 
-			int				 groupIndex = StringToInt(buffers[0]);
-			int				 fenceIndex = StringToInt(buffers[1]);
-
-			RestrictionGroup r;
-			GetGroup(groupIndex, r);
-
-			Restriction f;
-			GetRestriction(r, fenceIndex, f);
+			int groupIndex = StringToInt(buffers[0]);
 
 			switch (param2)
 			{
@@ -65,6 +58,13 @@ public int FencesHandler(Menu menu, MenuAction action, int param1, int param2)
 				}
 				default:
 				{
+					int				 fenceIndex = StringToInt(buffers[1]);
+
+					RestrictionGroup r;
+					GetGroup(groupIndex, r);
+
+					Restriction f;
+					GetRestriction(r, fenceIndex, f);
 					ShowFence(param1, groupIndex, fenceIndex);
 				}
 			}
@@ -134,6 +134,58 @@ public int FenceHandler(Menu menu, MenuAction action, int param1, int param2)
 
 			switch (param2)
 			{
+				case 0:
+				{
+					float direction[3];
+					GetAngleVectors(f.Angle, NULL_VECTOR, direction, NULL_VECTOR);
+					direction[0] *= -1.0;
+					direction[1] *= -1.0;
+
+					float proppos[3];
+					ScaleVector(direction, 258.0);
+					AddVectors(f.Position, direction, proppos);
+
+					Restriction newR;
+					NewRestriction(newR, r.Restrictions.Length, proppos, f.Angle);
+
+					r.Restrictions.PushArray(newR, sizeof(newR));
+					UpdateRestrictionGroup(r);
+					ShowFences(param1, groupIndex);
+				}
+				case 1:
+				{
+					float direction[3];
+					GetAngleVectors(f.Angle, NULL_VECTOR, direction, NULL_VECTOR);
+
+					float proppos[3];
+					ScaleVector(direction, 258.0);
+					AddVectors(f.Position, direction, proppos);
+
+					Restriction newR;
+					NewRestriction(newR, r.Restrictions.Length, proppos, f.Angle);
+
+					r.Restrictions.PushArray(newR, sizeof(newR));
+					UpdateRestrictionGroup(r);
+					ShowFences(param1, groupIndex);
+				}
+
+				case 2:
+				{
+					float direction[3];
+					GetAngleVectors(f.Angle, NULL_VECTOR, NULL_VECTOR, direction);
+
+					float proppos[3];
+					ScaleVector(direction, 120.0);
+					AddVectors(f.Position, direction, proppos);
+
+					Restriction newR;
+					NewRestriction(newR, r.Restrictions.Length, proppos, f.Angle);
+
+					r.Restrictions.PushArray(newR, sizeof(newR));
+					UpdateRestrictionGroup(r);
+					ShowFences(param1, groupIndex);
+				}
+
 				case 3:
 				{
 					r.Restrictions.Erase(fenceIndex);
@@ -213,6 +265,7 @@ public int SpawnMenuHandler(Menu menu, MenuAction action, int param1, int param2
 						AcceptEntityInput(entity, "kill");
 					}
 					SetSpawningEntity(param1, -1);
+					ShowFences(param1, groupIndex);
 				}
 			}
 		}
